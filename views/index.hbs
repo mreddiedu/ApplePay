@@ -61,7 +61,7 @@
                     supportedNetworks: [ 'visa', 'masterCard', 'amex', 'discover' ],
                     merchantCapabilities: [ 'supports3DS' ],
                     total: { label: 'Your Merchant Name', amount: '10.00' },
-                    requiredBillingContactFields: ["94404"]
+                    requiredBillingContactFields: ["postalAddress"]
                 });
                 console.log(paymentRequest);
                 console.log("paymentRequest.countryCode: ", paymentRequest.countryCode);
