@@ -66,6 +66,7 @@
                         displayName: 'My Store'
                     }, function (err, merchantSession) {
                         if (err) {
+                            console.log('Apple Pay failed to load.');
                             // You should show an error to the user, e.g. 'Apple Pay failed to load.'
                             return;
                         }
