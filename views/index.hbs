@@ -1,10 +1,11 @@
 <p>Apple Pay</p>
 
-<div class="apple-pay-button apple-pay-button-black">
+<div id="apple-pay-button" class="apple-pay-button apple-pay-button-black">
 </div>
 
 <script>
     var deviceData = null;
+    var button = document.querySelector('#apple-pay-button');
 
     if (window.ApplePaySession && ApplePaySession.supportsVersion(3) && ApplePaySession.canMakePayments()) {
         // This device supports version 3 of Apple Pay.
@@ -36,6 +37,29 @@
             }
             console.log("Set up your Apple Pay button here");
             // Set up your Apple Pay button here
+
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                console.log("button clicked");
+
+                var paymentRequest = applePayInstance.createPaymentRequest({
+                    total: {
+                        label: 'My Store',
+                        amount: '19.99'
+                    },
+
+                    // We recommend collecting billing address information, at minimum
+                    // billing postal code, and passing that billing postal code with
+                    // all Apple Pay transactions as a best practice.
+                    requiredBillingContactFields: [ "94404" ]
+                });
+                console.log(paymentRequest.countryCode);
+                console.log(paymentRequest.currencyCode);
+                console.log(paymentRequest.merchantCapabilities);
+                console.log(paymentRequest.supportedNetworks);
+
+                var session = new ApplePaySession(3, paymentRequest);
+            });
         });
     });
 
