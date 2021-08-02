@@ -43,15 +43,11 @@
                 console.log("button clicked");
 
                 var paymentRequest = applePayInstance.createPaymentRequest({
-                    total: {
-                        label: 'My Store',
-                        amount: '19.99'
-                    },
-
-                    // We recommend collecting billing address information, at minimum
-                    // billing postal code, and passing that billing postal code with
-                    // all Apple Pay transactions as a best practice.
-                    requiredBillingContactFields: [ "94404" ]
+  countryCode: 'US',
+  currencyCode: 'USD',
+  supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
+  merchantCapabilities: ['supports3DS'],
+  total: { label: 'Your Merchant Name', amount: '10.00' }
                 });
                 console.log(paymentRequest);
                 console.log("paymentRequest.countryCode: ", paymentRequest.countryCode);
