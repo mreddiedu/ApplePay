@@ -97,6 +97,8 @@
                         session.completePayment(ApplePaySession.STATUS_SUCCESS);
                     });
                 };
+
+                session.begin();
             });
         });
     });
