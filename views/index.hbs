@@ -43,11 +43,11 @@
                 console.log("button clicked");
 
                 var paymentRequest = applePayInstance.createPaymentRequest({
-  countryCode: 'US',
-  currencyCode: 'USD',
-  supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
-  merchantCapabilities: ['supports3DS'],
-  total: { label: 'Your Merchant Name', amount: '10.00' }
+                    countryCode: 'US',
+                    currencyCode: 'USD',
+                    supportedNetworks: [ 'visa', 'masterCard', 'amex', 'discover' ],
+                    merchantCapabilities: [ 'supports3DS' ],
+                    total: { label: 'Your Merchant Name', amount: '10.00' }
                 });
                 console.log(paymentRequest);
                 console.log("paymentRequest.countryCode: ", paymentRequest.countryCode);
@@ -57,6 +57,8 @@
 
                 var session = new ApplePaySession(3, paymentRequest);
 
+                session.begin();
+                
                 session.onvalidatemerchant = function (event) {
                     applePayInstance.performValidation({
                         validationURL: event.validationURL,
@@ -96,7 +98,7 @@
                     });
                 };
 
-                session.begin();
+                
             });
         });
     });
