@@ -1,0 +1,43 @@
+<p>Apple Pay</p>
+
+<div class="apple-pay-button apple-pay-button-black">
+</div>
+
+<script>
+    var deviceData = null;
+
+    if (window.ApplePaySession && ApplePaySession.supportsVersion(3) && ApplePaySession.canMakePayments()) {
+        // This device supports version 3 of Apple Pay.
+        console.log("This device supports version 3 of Apple Pay.");
+    }
+
+    if (!window.ApplePaySession) {
+        console.error('This device does not support Apple Pay');
+    }
+
+    if (!ApplePaySession.canMakePayments()) {
+        console.error('This device is not capable of making Apple Pay payments');
+    }
+
+    braintree.client.create({
+        authorization: 'sandbox_rzpcg934_mzwf7bv4zc2bjccb'
+    }, function (clientErr, clientInstance) {
+        if (clientErr) {
+            console.error('Error creating client:', clientErr);
+            return;
+        }
+
+        braintree.applePay.create({
+            client: clientInstance
+        }, function (applePayErr, applePayInstance) {
+            if (applePayErr) {
+                console.error('Error creating applePayInstance:', applePayErr);
+                return;
+            }
+            console.log("Set up your Apple Pay button here");
+            // Set up your Apple Pay button here
+        });
+    });
+
+
+</script>
