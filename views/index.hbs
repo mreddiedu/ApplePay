@@ -57,8 +57,8 @@
 
                 var session = new ApplePaySession(3, paymentRequest);
 
-                session.begin();
                 
+
                 session.onvalidatemerchant = function (event) {
                     applePayInstance.performValidation({
                         validationURL: event.validationURL,
@@ -69,6 +69,7 @@
                             // You should show an error to the user, e.g. 'Apple Pay failed to load.'
                             return;
                         }
+                        console.log('onvalidatemerchant');
                         session.completeMerchantValidation(merchantSession);
                     });
                 };
@@ -98,7 +99,7 @@
                     });
                 };
 
-                
+                session.begin();
             });
         });
     });
