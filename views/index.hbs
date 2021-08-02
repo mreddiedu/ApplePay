@@ -28,6 +28,19 @@
             return;
         }
 
+        braintree.dataCollector.create({
+            client: clientInstance
+        }, function (err, dataCollectorInstance) {
+            if (err) {
+                // Handle error in creation of data collector
+                return;
+            }
+            // At this point, you should access the dataCollectorInstance.deviceData value and provide it
+            // to your server, e.g. by injecting it into your form as a hidden input.
+            deviceData = dataCollectorInstance.deviceData;
+            console.log("deviceData: ", deviceData);
+        });
+
         braintree.applePay.create({
             client: clientInstance
         }, function (applePayErr, applePayInstance) {
@@ -57,7 +70,7 @@
 
                 var session = new ApplePaySession(3, paymentRequest);
 
-                
+
 
                 session.onvalidatemerchant = function (event) {
                     applePayInstance.performValidation({
@@ -89,6 +102,17 @@
 
                         // Send payload.nonce to your server.
                         console.log('nonce:', payload.nonce);
+                        console.log('payload:', payload);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/checkout',
+                            data: {
+                                'paymentMethodNonce': payload.nonce,
+                                'deviceData': deviceData,
+                                'postalCode': payload.postalCode
+                            }
+                        });
 
                         // If requested, address information is accessible in event.payment
                         // and may also be sent to your server.
